@@ -1,6 +1,3 @@
-//조원 메시지
-// 화이팅
-//
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -444,18 +441,17 @@ class ArticleController extends Controller {
 			for (Article article : articles) {
 				System.out.println(article.toString());
 			}
-		} else if (id != null && articles != null) {
+		} else if (id != null && articles != null){
 			id_ = Integer.parseInt(id);
-			System.out.println(
-					"========================================{" + id + "}page========================================");
+			System.out.println("========================================{" + id + "}page========================================");
 			for (int j = 0; j < id_; j++) {
-				for (int i = count; i < count + 10; i++) {
-
-					if (articles.size() <= i) {
+				for(int i = count; i < count+10; i++) {
+					
+					if(articles.size() <= i) {
 						break;
 					}
-
-					if (j == id_ - 1) {
+					
+					if(j == id_-1) {
 						System.out.println(articles.get(i).toString());
 					}
 					count_++;
@@ -463,7 +459,7 @@ class ArticleController extends Controller {
 				count += count_;
 			}
 		}
-
+		
 //		검색 만들기 : 
 //		1. arg2의 length()을 구한다
 //		2. 해당 페이지에 있는 게시글들(10) 전체 반복
@@ -742,7 +738,7 @@ class BuildService {
 
 			String html = "";
 
-			List<Article> articles = articleService.getArticlesByBoardCode(board.getCode()); // 여기서 메소드 만들어주기
+			List<Article> articles = articleService.getArticlesByBoardCode(board.getCode());
 
 			String template = Util.getFileContents("site_template/article/list.html");
 
@@ -850,7 +846,7 @@ class ArticleService {
 		return articleDao.modifyArticle(modifyArticle, id);
 	}
 
-	public List<Article> getArticlesByBoardCode(String code) { // 메소드 만들어줌
+	public List<Article> getArticlesByBoardCode(String code) {
 		return articleDao.getArticlesByBoardCode(code);
 	}
 

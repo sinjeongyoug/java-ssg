@@ -1,0 +1,50 @@
+maven repositery , jackson , 3 , lib ,cv, buildPath
+
+
+/////////////////////
+학원에 해놓은것 씌우고, 마감.
+/////////////////////
+만들 것
+
+- article list 1 안녕	//보류
+	
+- 조회수+추천 // 보류
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+
+완료
+- member join
+*- member login*
+*- member logout*
+*- member whoami*
+
+*- article write*
+- article modify 1
+- article delete 1
+- article detail 3
+- article list 1, list 2
+
+- article createBoard
+- article deleteBoard notice
+- article changeBoard notice
+
+*- build site*
+- build startAutoSite : 별도의 쓰레드를 켜서 build site 명령을 10초에 한번씩 수행한다. (즉, 자동빌드켜기)
+- build stopAutoSite : 쓰레드를 끈다. (즉, 자동빌드끄기)
+
+
+
+
+
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+1 2 3 4 5 6 7 8 9 10
+
+
+1 2 3 4 5 6 7 8 9 10
+
+
+
