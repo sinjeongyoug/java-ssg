@@ -312,74 +312,84 @@ class ArticleController extends Controller {
 
 	// 게시물 삭제
 	private void actionDelete(Request reqeust) {
-		System.out.println("== 게시물 삭제 ==");
-		int id = Integer.parseInt(reqeust.getArg1());
+		if(Factory.getSession().getLoginedMember() != null) {
+			System.out.println("== 게시물 삭제 ==");
+			int id = Integer.parseInt(reqeust.getArg1());
 
-		// 현재 게시판 id 가져오기
-		int boardId = Factory.getSession().getCurrentBoard().getId();
+			// 현재 게시판 id 가져오기
+			int boardId = Factory.getSession().getCurrentBoard().getId();
 
-		// 현재 로그인한 회원의 id 가져오기
-		int memberId = Factory.getSession().getLoginedMember().getId();
+			// 현재 로그인한 회원의 id 가져오기
+			int memberId = Factory.getSession().getLoginedMember().getId();
 
-		int isId = articleService.articleDelete(boardId, memberId, id);
+			int isId = articleService.articleDelete(boardId, memberId, id);
 
-		if (isId == -1) {
-			System.out.println("없는 게시물");
-		} else if (isId == -2) {
-			System.out.println("해당 게시판 접속 필요");
-		} else if (isId == -3) {
-			System.out.println("본인 게시물 아님");
+			if (isId == -1) {
+				System.out.println("없는 게시물");
+			} else if (isId == -2) {
+				System.out.println("해당 게시판 접속 필요");
+			} else if (isId == -3) {
+				System.out.println("본인 게시물 아님");
+			} else {
+				System.out.printf("%d번 게시물 삭제 완료\n", isId);
+			}
 		} else {
-			System.out.printf("%d번 게시물 삭제 완료\n", isId);
+			System.out.println("로그아웃 상태입니다");
 		}
+		
 	}
 
 	// 게시물 수정
 	private void actionModify(Request reqeust) {
-		System.out.println("== 게시물 수정 ==");
+		if(Factory.getSession().getLoginedMember() != null) {
+			System.out.println("== 게시물 수정 ==");
 
-		int id = Integer.parseInt(reqeust.getArg1());
-		String title = "";
-		String body = "";
+			int id = Integer.parseInt(reqeust.getArg1());
+			String title = "";
+			String body = "";
 
-		while (true) {
-			System.out.print("제목 : ");
-			title = Factory.getScanner().nextLine();
-			if (title.length() == 0) {
-				continue;
+			while (true) {
+				System.out.print("제목 : ");
+				title = Factory.getScanner().nextLine();
+				if (title.length() == 0) {
+					continue;
+				}
+
+				break;
 			}
 
-			break;
-		}
+			while (true) {
+				System.out.print("내용 : ");
+				body = Factory.getScanner().nextLine();
+				if (body.length() == 0) {
+					continue;
+				}
 
-		while (true) {
-			System.out.print("내용 : ");
-			body = Factory.getScanner().nextLine();
-			if (body.length() == 0) {
-				continue;
+				break;
 			}
 
-			break;
-		}
+			// 현재 게시판 id 가져오기
+			int boardId = Factory.getSession().getCurrentBoard().getId();
 
-		// 현재 게시판 id 가져오기
-		int boardId = Factory.getSession().getCurrentBoard().getId();
+			// 현재 로그인한 회원의 id 가져오기
+			int memberId = Factory.getSession().getLoginedMember().getId();
 
-		// 현재 로그인한 회원의 id 가져오기
-		int memberId = Factory.getSession().getLoginedMember().getId();
+			int newId = articleService.modify(boardId, memberId, title, body, id);
 
-		int newId = articleService.modify(boardId, memberId, title, body, id);
+			if (newId == -1) {
+				System.out.println("없는 게시물");
+			} else if (newId == -2) {
+				System.out.println("해당 게시판 접속 필요");
+			} else if (newId == -3) {
+				System.out.println("본인 게시물 아님");
+			} else {
+				System.out.printf("%d번 게시물 수정 완료\n", newId);
+			}
 
-		if (newId == -1) {
-			System.out.println("없는 게시물");
-		} else if (newId == -2) {
-			System.out.println("해당 게시판 접속 필요");
-		} else if (newId == -3) {
-			System.out.println("본인 게시물 아님");
 		} else {
-			System.out.printf("%d번 게시물 수정 완료\n", newId);
+			System.out.println("로그아웃 상태입니다");
 		}
-
+		
 	}
 
 	// 게시판 이동(변경)
@@ -468,37 +478,43 @@ class ArticleController extends Controller {
 	}
 
 	private void actionWrite(Request reqeust) {
-		String title = "";
-		String body = "";
+		
+		if(Factory.getSession().getLoginedMember() != null) {
+			String title = "";
+			String body = "";
 
-		while (true) {
-			System.out.print("제목 : ");
-			title = Factory.getScanner().nextLine();
-			if (title.length() == 0) {
-				continue;
+			while (true) {
+				System.out.print("제목 : ");
+				title = Factory.getScanner().nextLine();
+				if (title.length() == 0) {
+					continue;
+				}
+
+				break;
 			}
 
-			break;
-		}
+			while (true) {
+				System.out.print("내용 : ");
+				body = Factory.getScanner().nextLine();
+				if (body.length() == 0) {
+					continue;
+				}
 
-		while (true) {
-			System.out.print("내용 : ");
-			body = Factory.getScanner().nextLine();
-			if (body.length() == 0) {
-				continue;
+				break;
 			}
 
-			break;
+			// 현재 게시판 id 가져오기
+			int boardId = Factory.getSession().getCurrentBoard().getId();
+
+			// 현재 로그인한 회원의 id 가져오기
+			int memberId = Factory.getSession().getLoginedMember().getId();
+			int newId = articleService.write(boardId, memberId, title, body);
+
+			System.out.printf("%d번 글이 생성되었습니다.\n", newId);
+		} else {
+			System.out.println("로그아웃 상태입니다");
 		}
-
-		// 현재 게시판 id 가져오기
-		int boardId = Factory.getSession().getCurrentBoard().getId();
-
-		// 현재 로그인한 회원의 id 가져오기
-		int memberId = Factory.getSession().getLoginedMember().getId();
-		int newId = articleService.write(boardId, memberId, title, body);
-
-		System.out.printf("%d번 글이 생성되었습니다.\n", newId);
+		
 	}
 }
 
@@ -710,22 +726,34 @@ class MemberController extends Controller {
 class BuildService {
 	private static ArticleService articleService;
 	private static boolean workStarted;
+	private static MemberService memberService;
 
 	BuildService() {
 		articleService = Factory.getArticleService();
+		memberService = Factory.getMemberService();
 	}
 
 	static {
 		workStarted = false;
 	}
 
-//	public void buildDelete() {
-//	}
-
 	public void buildSite() {
 		Util.makeDir("site");
 		Util.makeDir("site/article");
-//		Util.makeDir("site/home");
+		Util.makeDir("site/home");
+		Util.makeDir("site/stat");
+		Util.makeDir("site/resource");
+		
+		String css = Util.getFileContents("site_template/resource/common.css");
+		String js = Util.getFileContents("site_template/resource/common.js");
+		String log = Util.getFileContents("site_template/resource/log.html");
+		String home = Util.getFileContents("site_template/home/index.html");
+		String stat = Util.getFileContents("site_template/stat/index.html");
+		Util.writeFileContents("site/resource/common.css", css);
+		Util.writeFileContents("site/resource/common.js", js);
+		Util.writeFileContents("site/resource/log.html", log);
+		
+		
 
 		String head = Util.getFileContents("site_template/part/head.html");
 		String foot = Util.getFileContents("site_template/part/foot.html");
@@ -733,7 +761,28 @@ class BuildService {
 		// 각 게시판 별 게시물리스트 페이지 생성
 		List<Board> boards = articleService.getBoards();
 
+		String middle = "";	
+		for(Board board : boards) {
+			String fileLink = board.getCode() + "-list-1.html";
+			String fileName = board.getCode();
+			middle += "<li><a href=\"../article/" + fileLink + "\">" + fileName + "</a></li>";
+		}
+		home = home.replace("${LI}", middle);
+		stat = stat.replace("${LI}", middle);
+		Util.writeFileContents("site/home/index.html", home);
+		Util.writeFileContents("site/stat/index.html", stat);
+		
+		
+		middle = "";	
+		for(Board board : boards) {
+			String fileLink = board.getCode() + "-list-1.html";
+			String fileName = board.getCode();
+			middle += "<li><a href=\"" + fileLink + "\">" + fileName + "</a></li>";
+		}
+//		
 		for (Board board : boards) {
+			head = Util.getFileContents("site_template/part/head.html");
+			foot = Util.getFileContents("site_template/part/foot.html");
 			String fileName = board.getCode() + "-list-1.html";
 
 			String html = "";
@@ -742,16 +791,24 @@ class BuildService {
 
 			String template = Util.getFileContents("site_template/article/list.html");
 
+			int count = 0;
 			for (Article article : articles) {
+				Member member = memberService.getMember(article.getMemberId());
+				
+				count++;
 				html += "<tr>";
-				html += "<td>" + article.getId() + "</td>";
+				html += "<td>" + count + "</td>";
+//				html += "<td>" + article.getId() + "</td>";
 				html += "<td>" + article.getRegDate() + "</td>";
+				html += "<td>" +  member.getName() + "</td>";
 				html += "<td><a href=\"" + article.getId() + ".html\">" + article.getTitle() + "</a></td>";
 				html += "</tr>";
 			}
 
 			html = template.replace("${TR}", html);
-
+			
+			head = head.replace("${LI}", middle);
+			
 			html = head + html + foot;
 
 			Util.writeFileContents("site/article/" + fileName, html);
@@ -760,17 +817,39 @@ class BuildService {
 		// 게시물 별 파일 생성
 		List<Article> articles = articleService.getArticles();
 
+		int count = 0;
 		for (Article article : articles) {
 			String html = "";
 
 			html += "<div>제목 : " + article.getTitle() + "</div>";
 			html += "<div>내용 : " + article.getBody() + "</div>";
+			html += "<div>작성자 : " + memberService.getMember(article.getMemberId()).getName() + "</div>";
 			html += "<div><a href=\"" + (article.getId() - 1) + ".html\">이전글</a></div>";
 			html += "<div><a href=\"" + (article.getId() + 1) + ".html\">다음글</a></div>";
+			
+			//이전페이지 다음페이지 없을경우.. 좀드릅지만 이렇게라도...
+			if(count == 0) {
+				html = "";
+				html += "<div>제목 : " + article.getTitle() + "</div>";
+				html += "<div>내용 : " + article.getBody() + "</div>";
+				html += "<div>작성자 : " + memberService.getMember(article.getMemberId()).getName() + "</div>";
+				html += "<div><a href=\"#\">이전글</a></div>";
+				html += "<div><a href=\"" + (article.getId() + 1) + ".html\">다음글</a></div>";
+			} else if(count == articles.size()-1) {
+				html = "";
+				html += "<div>제목 : " + article.getTitle() + "</div>";
+				html += "<div>내용 : " + article.getBody() + "</div>";
+				html += "<div>작성자 : " + memberService.getMember(article.getMemberId()).getName() + "</div>";
+				html += "<div><a href=\"" + (article.getId() - 1) + ".html\">이전글</a></div>";
+				html += "<div><a href=\"#\">다음글</a></div>";
+			}
+			count++;
+			////
 
 			html = head + html + foot;
 
 			Util.writeFileContents("site/article/" + article.getId() + ".html", html);
+			
 		}
 	}
 

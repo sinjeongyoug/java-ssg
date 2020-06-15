@@ -68,6 +68,7 @@ a {
 .menu-content {
     background-color:  white;
     border: 3px solid black;
+    
 }
 
 .menu-content > div:not(:last-child){
@@ -101,10 +102,25 @@ table td:not(:last-child){
     text-align: center;
 }
 
+table {
+    width: 100%;
+}
+
 td > a {
     color: blue;
 }
 
 td {
     width: calc(100% / 4);
+}
+
+
+/* log */
+
+.log {
+    text-align: right;
+}
+
+.log * {
+    display: inline-block;
 }

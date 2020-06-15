@@ -7,6 +7,9 @@ maven repositery , jackson , 3 , lib ,cv, buildPath
 만들 것
 
 - article list 1 안녕	//보류
+
+- 수정 
+ 게시글 작성자<< 
 	
 - 조회수+추천 // 보류
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
